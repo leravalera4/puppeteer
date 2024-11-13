@@ -179,7 +179,7 @@ const scrapeLogic = async (res) => {
 async function processStore(page, storeLink, productLinks) {
   try {
     console.log(`Navigating to store: ${storeLink}`);
-    await page.goto(storeLink, { waitUntil: "networkidle2", timeout: 60000 });
+    await page.goto(storeLink, { waitUntil: "networkidle2", timeout: 120000 });
 
     const storeID = page.url().split("/").pop();
 
