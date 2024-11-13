@@ -15,3 +15,12 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
+
+process.on('SIGINT', () => {
+  console.log("Процесс завершён");
+  process.exit(0);
+});
+
+setInterval(() => {
+  console.log("Работаю...");
+}, 10000);
