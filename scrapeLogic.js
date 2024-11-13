@@ -188,7 +188,7 @@ async function processStore(page, storeLink, productLinks) {
     );
     if (setStoreButton) {
       await setStoreButton.click();
-      await page.waitForTimeout(3000);
+      await page.waitForTimeout(60000);
     } else {
       console.warn("Set Store button not found for store:", storeID);
     }
