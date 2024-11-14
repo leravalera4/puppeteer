@@ -189,7 +189,7 @@ page.on('request', (req) => {
 async function processStore(page, storeLink, productLinks) {
   try {
     console.log(`Navigating to store: ${storeLink}`);
-    await page.goto(storeLink, { waitUntil: "networkidle0", timeout: 60000 });
+    await page.goto(storeLink, { waitUntil: "networkidle2", timeout: 60000 });
 
     const storeID = page.url().split("/").pop();
 
@@ -214,7 +214,7 @@ async function processStore(page, storeLink, productLinks) {
 }
 
 async function scrapeProductPage(page, productLink, storeID) {
-  await page.goto(productLink, { waitUntil: "networkidle0", timeout: 60000 });
+  await page.goto(productLink, { waitUntil: "networkidle2", timeout: 60000 });
 
   let category;
   try {
