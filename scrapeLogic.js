@@ -219,7 +219,7 @@ async function scrapeProductPage(page, productLink, storeID) {
     category = "Unknown Category";
   }
 
-  await page.waitForTimeout(2000);
+  await page.waitForTimeout(60000);
 
   while (true) {
     const productHandles = await page.$$(".chakra-linkbox");
@@ -231,9 +231,10 @@ async function scrapeProductPage(page, productLink, storeID) {
 
     const nextButton = await page.$('a.chakra-link[aria-label="Next Page"]');
     if (!nextButton) break;
-
+    const nextUrl = await nextButton.evaluate(el => el.href); // Получаем ссылку из кнопки
+console.log('Next Page URL:', nextUrl); // Показываем ссылку
     await nextButton.click();
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(60000);
   }
 }
 
