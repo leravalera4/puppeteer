@@ -214,11 +214,11 @@ async function processStore(page, storeLink, productLinks) {
 }
 
 async function scrapeProductPage(page, productLink, storeID) {
-  await page.goto(productLink, { waitUntil: "networkidle0", timeout: 120000 });
+  await page.goto(productLink, { waitUntil: "networkidle0", timeout: 180000 });
 
   let category;
   try {
-    await page.waitForSelector(".chakra-link.css-kho608", { timeout: 120000 });
+    await page.waitForSelector(".chakra-link.css-kho608", { timeout: 180000 });
     const elements = await page.$$eval(".chakra-link.css-kho608", (links) =>
       links.map((link) => link.textContent.trim())
     );
@@ -229,7 +229,7 @@ async function scrapeProductPage(page, productLink, storeID) {
     category = "Unknown Category";
   }
 
-  await page.waitForTimeout(60000);
+  await page.waitForTimeout(120000);
 
   while (true) {
     const productHandles = await page.$$(".chakra-linkbox");
