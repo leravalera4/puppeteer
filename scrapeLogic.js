@@ -189,7 +189,7 @@ page.on('request', (req) => {
 async function processStore(page, storeLink, productLinks) {
   try {
     console.log(`Navigating to store: ${storeLink}`);
-    await page.goto(storeLink, { waitUntil: "networkidle2", timeout: 60000 });
+    await page.goto(storeLink, { waitUntil: "networkidle2", timeout: 120000 });
 
     const storeID = page.url().split("/").pop();
 
@@ -198,7 +198,7 @@ async function processStore(page, storeLink, productLinks) {
     );
     if (setStoreButton) {
       await setStoreButton.click();
-      await page.waitForTimeout(60000);
+      await page.waitForTimeout(120000);
     } else {
       console.warn("Set Store button not found for store:", storeID);
     }
@@ -214,11 +214,11 @@ async function processStore(page, storeLink, productLinks) {
 }
 
 async function scrapeProductPage(page, productLink, storeID) {
-  await page.goto(productLink, { waitUntil: "networkidle2", timeout: 60000 });
+  await page.goto(productLink, { waitUntil: "networkidle2", timeout: 120000 });
 
   let category;
   try {
-    await page.waitForSelector(".chakra-link.css-kho608", { timeout: 60000 });
+    await page.waitForSelector(".chakra-link.css-kho608", { timeout: 120000 });
     const elements = await page.$$eval(".chakra-link.css-kho608", (links) =>
       links.map((link) => link.textContent.trim())
     );
