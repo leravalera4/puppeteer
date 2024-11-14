@@ -161,6 +161,16 @@ const scrapeLogic = async (res) => {
   });
 
   const page = await browser.newPage();
+  await page.setRequestInterception(true);
+
+// Обработчик для перехвата и блокировки ненужных ресурсов
+page.on('request', (req) => {
+  if (['image', 'stylesheet', 'font'].includes(req.resourceType())) {
+    req.abort();
+  } else {
+    req.continue();
+  }
+});
 
   try {
     for (const link of links) {
@@ -179,7 +189,7 @@ const scrapeLogic = async (res) => {
 async function processStore(page, storeLink, productLinks) {
   try {
     console.log(`Navigating to store: ${storeLink}`);
-    await page.goto(storeLink, { waitUntil: "networkidle2", timeout: 120000 });
+    await page.goto(storeLink, { waitUntil: "networkidle0", timeout: 60000 });
 
     const storeID = page.url().split("/").pop();
 
@@ -204,11 +214,11 @@ async function processStore(page, storeLink, productLinks) {
 }
 
 async function scrapeProductPage(page, productLink, storeID) {
-  await page.goto(productLink, { waitUntil: "networkidle2", timeout: 120000 });
+  await page.goto(productLink, { waitUntil: "networkidle0", timeout: 60000 });
 
   let category;
   try {
-    await page.waitForSelector(".chakra-link.css-kho608", { timeout: 120000 });
+    await page.waitForSelector(".chakra-link.css-kho608", { timeout: 60000 });
     const elements = await page.$$eval(".chakra-link.css-kho608", (links) =>
       links.map((link) => link.textContent.trim())
     );
@@ -228,7 +238,6 @@ async function scrapeProductPage(page, productLink, storeID) {
         extractAndSaveProductData(handle, storeID, category)
       )
     );
-
     const nextButton = await page.$('a.chakra-link[aria-label="Next Page"]');
     if (!nextButton) break;
     const nextUrl = await nextButton.evaluate(el => el.href); // Получаем ссылку из кнопки
