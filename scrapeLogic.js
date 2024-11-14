@@ -161,16 +161,16 @@ const scrapeLogic = async (res) => {
   });
 
   const page = await browser.newPage();
-await page.setRequestInterception(true);
+// await page.setRequestInterception(true);
 
-// Обработчик для перехвата и блокировки ненужных ресурсов
-page.on('request', (req) => {
-  if (['font'].includes(req.resourceType())) {
-    req.abort();
-  } else {
-    req.continue();
-  }
-});
+// // Обработчик для перехвата и блокировки ненужных ресурсов
+// page.on('request', (req) => {
+//   if (['font'].includes(req.resourceType())) {
+//     req.abort();
+//   } else {
+//     req.continue();
+//   }
+// });
 
   try {
     for (const link of links) {
