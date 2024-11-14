@@ -161,11 +161,11 @@ const scrapeLogic = async (res) => {
   });
 
   const page = await browser.newPage();
-  await page.setRequestInterception(true);
+ await page.setRequestInterception(false);
 
-// Обработчик для перехвата и блокировки ненужных ресурсов
+// Или, если хотите оставить перехват, но не блокировать CSS и изображения, исключите их из списка
 page.on('request', (req) => {
-  if (['image', 'stylesheet', 'font'].includes(req.resourceType())) {
+  if (['font'].includes(req.resourceType())) {
     req.abort();
   } else {
     req.continue();
