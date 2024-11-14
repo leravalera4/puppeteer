@@ -189,7 +189,7 @@ page.on('request', (req) => {
 async function processStore(page, storeLink, productLinks) {
   try {
     console.log(`Navigating to store: ${storeLink}`);
-    await page.goto(storeLink, { waitUntil: "networkidle2", timeout: 120000 });
+    await page.goto(storeLink, { waitUntil: "networkidle0", timeout: 180000 });
 
     const storeID = page.url().split("/").pop();
 
@@ -198,7 +198,7 @@ async function processStore(page, storeLink, productLinks) {
     );
     if (setStoreButton) {
       await setStoreButton.click();
-      await page.waitForTimeout(120000);
+      await page.waitForTimeout(180000);
     } else {
       console.warn("Set Store button not found for store:", storeID);
     }
@@ -214,7 +214,7 @@ async function processStore(page, storeLink, productLinks) {
 }
 
 async function scrapeProductPage(page, productLink, storeID) {
-  await page.goto(productLink, { waitUntil: "networkidle2", timeout: 120000 });
+  await page.goto(productLink, { waitUntil: "networkidle0", timeout: 120000 });
 
   let category;
   try {
@@ -243,7 +243,7 @@ async function scrapeProductPage(page, productLink, storeID) {
     const nextUrl = await nextButton.evaluate(el => el.href); // Получаем ссылку из кнопки
 console.log('Next Page URL:', nextUrl); // Показываем ссылку
     await nextButton.click();
-    await page.waitForTimeout(60000);
+    await page.waitForTimeout(120000);
   }
 }
 
