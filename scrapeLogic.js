@@ -98,11 +98,6 @@ const scrapeLogic = async (res) => {
     "https://www.realcanadiansuperstore.ca/food/natural-and-organic/canned/c/29925",
     "https://www.realcanadiansuperstore.ca/food/natural-and-organic/condiments-sauces-and-oils/c/29713",
     "https://www.realcanadiansuperstore.ca/food/natural-and-organic/bars-and-protein/c/59281",
-    // "https://www.realcanadiansuperstore.ca/food/natural-and-organic/vitamins-minerals-and-supplements/c/59374",
-    // "https://www.realcanadiansuperstore.ca/food/natural-and-organic/health-beauty/c/59320",
-    // "https://www.realcanadiansuperstore.ca/food/natural-and-organic/household-supplies/c/59339",
-
-    "https://www.realcanadiansuperstore.ca/collection/celebratory-cakes?icid=gr_cakes_productcarousel_1_clp",
 
     "https://www.realcanadiansuperstore.ca/food/bakery/bread/c/28251",
     "https://www.realcanadiansuperstore.ca/food/bakery/wraps-flatbread-pizza-crust/c/28150",
@@ -162,15 +157,27 @@ const scrapeLogic = async (res) => {
 
   const page = await browser.newPage();
 // await page.setRequestInterception(true);
+  await page.setExtraHTTPHeaders(headers);
 
-// // Обработчик для перехвата и блокировки ненужных ресурсов
-// page.on('request', (req) => {
-//   if (['font'].includes(req.resourceType())) {
-//     req.abort();
-//   } else {
-//     req.continue();
-//   }
-// });
+  const headers = {
+    'Cache-Control': 'max-age=0, no-cache, no-store',
+    Connection: 'keep-alive',
+    'Content-Type': 'application/json;charset=UTF-8',
+    Pragma: 'no-cache',
+    Referer: 'https://www.zehrs.ca/the-decadent-middle-chocolate-chip-cookie/p/20684269_EA?source=nspt',
+    'Sec-CH-UA': '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
+    'Sec-CH-UA-Mobile': '?1',
+    'Sec-CH-UA-Platform': '"Android"',
+    'Sec-Fetch-Dest': 'empty',
+    'Sec-Fetch-Mode': 'cors',
+    'Sec-Fetch-Site': 'same-origin',
+    'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Mobile Safari/537.36',
+    Accept: 'application/json, text/plain, */*',
+    Host: 'www.zehrs.ca',
+    'Accept-Encoding': 'gzip, deflate, br, zstd',
+    'Accept-Language': 'en',
+    Cookie: 'lcl_lang_pref=en; Origin_Session_Cookie=B; PIM-SESSION-ID=vv5f4LZB03HiX0ZI; ...', // используйте реальные cookies
+  };
 
   try {
     for (const link of links) {
